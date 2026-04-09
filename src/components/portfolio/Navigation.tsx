@@ -2,20 +2,20 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GradientText } from '@/components/ui/gradient-text';
+import { Portfolio } from '@/lib/store';
 import { Menu, X } from 'lucide-react';
 
-const links = [
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Journey', href: '#timeline' },
-  { name: 'Contact', href: '#contact' },
-];
-
-export function Navigation() {
+export function Navigation({ data }: { data: Portfolio }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const links = [
+    { name: 'About', href: '#about' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Journey', href: '#timeline' },
+    { name: 'Contact', href: '#contact' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,7 +43,7 @@ export function Navigation() {
           }`}>
             
             <a href="#hero" className="text-xl font-bold font-space tracking-wider">
-              A<GradientText>kash</GradientText>.
+              {data.header.name.charAt(0)}<span style={{ color: data.theme.primaryColor }}>{data.header.name.slice(1)}</span>.
             </a>
 
             {/* Desktop Menu */}
@@ -52,17 +52,17 @@ export function Navigation() {
                 <a 
                   key={link.name} 
                   href={link.href}
-                  className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors hover:glow-text relative group"
+                  className="text-sm font-medium text-foreground/80 hover:text-white transition-colors relative group"
                 >
                   {link.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all group-hover:w-full" />
+                  <span className="absolute -bottom-1 left-0 w-0 h-px transition-all group-hover:w-full" style={{ backgroundColor: data.theme.primaryColor }} />
                 </a>
               ))}
             </div>
 
             {/* Mobile Menu Toggle */}
             <button 
-              className="md:hidden text-foreground/80 hover:text-primary p-2"
+              className="md:hidden text-foreground/80 p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <Menu className="w-6 h-6" />
@@ -84,7 +84,7 @@ export function Navigation() {
             <div className="flex justify-end mb-8">
               <button 
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2 text-foreground/80 hover:text-primary glass rounded-full"
+                className="p-2 text-foreground/80 glass rounded-full"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -99,7 +99,8 @@ export function Navigation() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-2xl font-space font-bold hover:text-primary transition-colors"
+                  className="text-2xl font-space font-bold transition-colors hover:opacity-80"
+                  style={{ color: data.theme.primaryColor }}
                 >
                   {link.name}
                 </motion.a>

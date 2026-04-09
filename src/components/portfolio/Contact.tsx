@@ -3,10 +3,10 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { GradientText } from '@/components/ui/gradient-text';
-import { Mail, Send, CheckCircle2 } from 'lucide-react';
+import { Portfolio } from '@/lib/store';
+import { Send, CheckCircle2 } from 'lucide-react';
 
-export function Contact() {
+export function Contact({ data }: { data: Portfolio }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,7 +15,6 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate network request
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSuccess(true);
@@ -34,7 +33,7 @@ export function Contact() {
            className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold font-space mb-4">
-             Let&apos;s Build <GradientText>Something</GradientText>
+             Let&apos;s Build <span style={{ color: data.theme.primaryColor }}>Something</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             Ready to bring your ideas to life? Send me a message and let&apos;s create an amazing digital experience together.
@@ -47,9 +46,8 @@ export function Contact() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-2xl mx-auto glass p-8 md:p-12 rounded-3xl relative overflow-hidden"
         >
-          {/* Decorative glow */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/10 rounded-full blur-[80px] pointer-events-none" />
+          <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[80px] pointer-events-none" style={{ backgroundColor: `${data.theme.accentGlow}15` }} />
+          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[80px] pointer-events-none" style={{ backgroundColor: `${data.theme.primaryColor}15` }} />
 
           <form onSubmit={handleSubmit} className="relative z-10 flex flex-col gap-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -60,7 +58,8 @@ export function Contact() {
                   id="name" 
                   required
                   placeholder="John Doe" 
-                  className="bg-card/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-foreground placeholder:text-muted-foreground"
+                  className="bg-card/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none transition-all text-foreground placeholder:text-muted-foreground"
+                  style={{ '--tw-ring-color': data.theme.primaryColor } as any}
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -70,7 +69,7 @@ export function Contact() {
                   id="email" 
                   required
                   placeholder="john@example.com" 
-                  className="bg-card/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-foreground placeholder:text-muted-foreground"
+                  className="bg-card/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none transition-all text-foreground placeholder:text-muted-foreground"
                 />
               </div>
             </div>
@@ -81,8 +80,8 @@ export function Contact() {
                 id="message" 
                 required
                 rows={5}
-                placeholder="Hi Akash, I'd like to talk about..." 
-                className="bg-card/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-foreground placeholder:text-muted-foreground resize-none"
+                placeholder={`Hi ${data.header.name}, I'd like to talk about...`} 
+                className="bg-card/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none transition-all text-foreground placeholder:text-muted-foreground resize-none"
               />
             </div>
 
@@ -91,6 +90,7 @@ export function Contact() {
               size="lg" 
               disabled={isSubmitting || isSuccess}
               className="w-full mt-2 h-14 text-base relative overflow-hidden group"
+              style={{ backgroundColor: data.theme.accentGlow }}
             >
               <span className={`flex items-center gap-2 transition-transform duration-300 ${isSubmitting ? '-translate-y-12' : 'translate-y-0'} ${isSuccess ? 'scale-0' : 'scale-100'}`}>
                 Send Message <Send className="w-4 h-4 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
