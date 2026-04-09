@@ -1,0 +1,85 @@
+'use client';
+
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { siteData } from '@/lib/data';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { GradientText } from '@/components/ui/gradient-text';
+import { Code, Layout, Lightbulb, Terminal } from 'lucide-react';
+
+const icons = [Layout, Lightbulb, Terminal, Code];
+
+export function About() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.5, ease: "easeOut" as const },
+    },
+  };
+
+  return (
+    <section id="about" className="py-24 relative" ref={ref}>
+      <div className="container px-4 md:px-6">
+        <div className="flex flex-col md:flex-row gap-12 items-center">
+          
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="w-full md:w-1/2"
+          >
+            <h2 className="text-3xl md:text-5xl font-bold font-space mb-6">
+              About <GradientText>Me</GradientText>
+            </h2>
+            <div className="glass p-8 rounded-2xl relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <p className="text-lg text-muted-foreground leading-relaxed relative z-10">
+                {siteData.about.description}
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="w-full md:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4"
+          >
+            {siteData.about.cards.map((card, index) => {
+              const Icon = icons[index % icons.length];
+              return (
+                <motion.div key={index} variants={itemVariants}>
+                  <Card glow className="h-full bg-card/60 backdrop-blur-md border-white/5">
+                    <CardHeader>
+                      <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center mb-4 text-primary">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <CardTitle className="text-lg">{card.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">{card.description}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
