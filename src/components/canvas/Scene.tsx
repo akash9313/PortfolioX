@@ -4,21 +4,19 @@ import { Canvas } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
 import { HeroOrb } from './HeroOrb';
 import { Particles } from './Particles';
-import { Suspense, useRef } from 'react';
+import { Suspense } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 
 // This component softly tracks the mouse slightly moving the camera
 function Rig() {
-  useFrame((state, delta) => {
+  useFrame((state) => {
     // Smooth camera mouse follow
     const targetX = (state.pointer.x * 2);
     const targetY = (state.pointer.y * 2);
 
     state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, targetX, 0.05);
     state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, targetY, 0.05);
-    // state.camera.lookAt(0, 0, 0); 
-    // We don't want it exactly look at 0, 0, 0 so the scene feels parallax not swivel
     state.camera.rotation.x = THREE.MathUtils.lerp(state.camera.rotation.x, -(targetY * 0.1), 0.05);
     state.camera.rotation.y = THREE.MathUtils.lerp(state.camera.rotation.y, (targetX * 0.1), 0.05);
   });
@@ -30,13 +28,13 @@ export function Scene() {
     <div className="fixed inset-0 z-[-1] bg-background pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 45 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       >
-        <ambientLight intensity={0.5} color="#ffffff" />
+        <ambientLight intensity={0.2} color="#ffffff" />
         <Suspense fallback={null}>
           <HeroOrb />
-          <Particles count={800} />
-          {/* Add a subtle environment map for reflections if needed */}
+          <Particles count={1200} />
+          {/* City environment provides incredible high-contrast HDRI reflections for the glass */}
           <Environment preset="city" />
         </Suspense>
         <Rig />
