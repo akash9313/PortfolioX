@@ -4,38 +4,40 @@ import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
+const generateParticles = (count: number) => {
+  const pos = new Float32Array(count * 3);
+  const cols = new Float32Array(count * 3);
+  
+  const colorPrimary = new THREE.Color('#8a2be2'); // Purple
+  const colorSecondary = new THREE.Color('#00ffff'); // Cyan
+
+  for (let i = 0; i < count; i++) {
+    // Swirling galaxy distribution math
+    const radius = 4 + (Math.random() * 25);
+    const angle = Math.random() * Math.PI * 2;
+    const height = (Math.random() - 0.5) * 4 * (28 / radius); // Tighter on outer edges
+
+    pos[i * 3] = Math.cos(angle) * radius;
+    pos[i * 3 + 1] = height;
+    pos[i * 3 + 2] = Math.sin(angle) * radius;
+
+    // Color mixing gradient based on distance from center
+    const mixRatio = Math.min(1, Math.max(0, (radius - 4) / 25));
+    const mixedColor = colorPrimary.clone().lerp(colorSecondary, mixRatio * Math.random());
+    
+    cols[i * 3] = mixedColor.r;
+    cols[i * 3 + 1] = mixedColor.g;
+    cols[i * 3 + 2] = mixedColor.b;
+  }
+
+  return [pos, cols];
+};
+
 export function Particles({ count = 1500 }) {
   const pointsRef = useRef<THREE.Points>(null);
 
   // Generate an elegant, orbital galaxy-swirl for particles
-  const [positions, colors] = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    const cols = new Float32Array(count * 3);
-    
-    const colorPrimary = new THREE.Color('#8a2be2'); // Purple
-    const colorSecondary = new THREE.Color('#00ffff'); // Cyan
-
-    for (let i = 0; i < count; i++) {
-      // Swirling galaxy distribution math
-      const radius = 4 + (Math.random() * 25);
-      const angle = Math.random() * Math.PI * 2;
-      const height = (Math.random() - 0.5) * 4 * (28 / radius); // Tighter on outer edges
-
-      pos[i * 3] = Math.cos(angle) * radius;
-      pos[i * 3 + 1] = height;
-      pos[i * 3 + 2] = Math.sin(angle) * radius;
-
-      // Color mixing gradient based on distance from center
-      const mixRatio = Math.min(1, Math.max(0, (radius - 4) / 25));
-      const mixedColor = colorPrimary.clone().lerp(colorSecondary, mixRatio * Math.random());
-      
-      cols[i * 3] = mixedColor.r;
-      cols[i * 3 + 1] = mixedColor.g;
-      cols[i * 3 + 2] = mixedColor.b;
-    }
-
-    return [pos, cols];
-  }, [count]);
+  const [positions, colors] = useMemo(() => generateParticles(count), [count]);
 
   useFrame((state, delta) => {
     if (pointsRef.current) {

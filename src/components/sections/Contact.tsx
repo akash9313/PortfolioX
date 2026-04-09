@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { GradientText } from '@/components/ui/gradient-text';
-import { Mail, Send, CheckCircle2 } from 'lucide-react';
+import { Send, CheckCircle2 } from 'lucide-react';
 
 export function Contact() {
   const ref = useRef(null);

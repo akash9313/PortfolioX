@@ -1,5 +1,4 @@
-import { Code, Layout, Smartphone, Database, Server, PenTool } from "lucide-react";
-
+// Data for the portfolio
 export const siteData = {
   header: {
     name: "Akash",

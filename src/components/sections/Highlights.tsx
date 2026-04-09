@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { motion, useInView, useAnimation } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { siteData } from '@/lib/data';
 
 function AnimatedCounter({ value }: { value: string }) {
@@ -13,7 +13,7 @@ function AnimatedCounter({ value }: { value: string }) {
   
   useEffect(() => {
     if (inView && ref.current && !isNaN(numberValue)) {
-      let start = 0;
+      const start = 0;
       const end = numberValue;
       const duration = 2000;
       const startTime = performance.now();
