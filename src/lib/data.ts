@@ -1,12 +1,12 @@
 // Data for the portfolio
 export const siteData = {
   header: {
-    name: "Akash",
+    name: "Akash Uchachariya",
     tagline: "CSE Student | Developer | Problem Solver | Tech Enthusiast",
     description: "I build modern, creative, and interactive digital experiences.",
   },
   about: {
-    description: "I am Akash, a Computer Science Engineering student passionate about web development, UI/UX, creative coding, and problem solving. I enjoy building modern, interactive, and visually engaging digital experiences.",
+    description: "I am Akash Uchachariya, a Computer Science Engineering student passionate about web development, UI/UX, creative coding, and problem solving. I enjoy building modern, interactive, and visually engaging digital experiences.",
     cards: [
       { title: "Frontend Development", description: "Building performant and beautiful UIs with React and Next.js." },
       { title: "Problem Solving", description: "Tackling logical challenges using arrays, trees, and graphs." },
@@ -28,19 +28,19 @@ export const siteData = {
     { name: "Tailwind CSS", level: 90 },
   ],
   projects: [
+    // {
+    //   title: "VS Code-like Snippet Manager",
+    //   description: "A code snippet manager inspired by VS Code where users can save, organize, and manage reusable code snippets.",
+    //   tags: ["React", "Tailwind CSS", "Firebase"],
+    //   github: "https://github.com/akash/snippet-manager",
+    //   demo: "https://snippet-manager-demo.com",
+    // },
     {
-      title: "VS Code-like Snippet Manager",
-      description: "A code snippet manager inspired by VS Code where users can save, organize, and manage reusable code snippets.",
-      tags: ["React", "Tailwind CSS", "Firebase"],
-      github: "https://github.com/akash/snippet-manager",
-      demo: "https://snippet-manager-demo.com",
-    },
-    {
-      title: "Portfolio Website Builder",
+      title: "Online Portfolio Builder",
       description: "A modern portfolio builder that helps users create and publish beautiful personal websites.",
-      tags: ["Next.js", "TypeScript", "Tailwind"],
-      github: "https://github.com/akash/portfolio-builder",
-      demo: "https://portfolio-builder.com",
+      tags: ["HTML", "CSS", "Javascript"],
+      github: "https://github.com/akash9313/Online-Portfolio-builder-system",
+      demo: "https://portfoliox-2e787.web.app/",
     },
     {
       title: "Login & Signup System",
@@ -71,9 +71,9 @@ export const siteData = {
     { label: "UI Components Designed", value: "50+" },
   ],
   contact: {
-    email: "hello@akash.dev",
-    linkedin: "https://linkedin.com/in/akash",
-    github: "https://github.com/akash",
-    instagram: "https://instagram.com/akash",
+    email: "akashuchachariya9313@gmail.com",
+    linkedin: "https://www.linkedin.com/in/akash-uchachariya-21142a329/",
+    github: "https://github.com/akash9313",
+    instagram: "https://www.instagram.com/akash_uchchariya9313/",
   }
 };
